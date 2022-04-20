@@ -34,7 +34,6 @@ services:
   postgres-compose:
     image: postgres
     environment:
-      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "admin123"
       POSTGRES_DB: "kafka"
     ports:
@@ -47,7 +46,7 @@ services:
   pgadmin-compose:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "test@yahoo.com.br"
+      PGADMIN_DEFAULT_EMAIL: "test@test.com"
       PGADMIN_DEFAULT_PASSWORD: "PgAdmin123"
     ports:
       - "16543:80"
