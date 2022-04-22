@@ -30,6 +30,7 @@ class OrderManagementServiceTest {
     @Autowired
     OrderManagementService orderManagementService;
 
+
     @Test
     void processOrder_allSuccess_true() {
         OrderDAO orderDAO = orderGenerator.generateNewOrderDAOs(Optional.of(1L), Optional.of(1L)).get(0);

@@ -21,11 +21,11 @@
     </properties>
 
     <modules>
-        <module>common</module>
         <module>order</module>
         <module>stock</module>
         <module>payment</module>
         <module>notification</module>
+        <module>common</module>
     </modules>
 
 </project>

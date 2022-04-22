@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > KafkaConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.sylleryum.order.config</a>
+</div>
+
+<h1>Coverage Summary for Class: KafkaConfig (com.sylleryum.order.config)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">KafkaConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">KafkaConfig$$EnhancerBySpringCGLIB$$bc123724</td>
+  </tr>
+  <tr>
+    <td class="name">KafkaConfig$$EnhancerBySpringCGLIB$$bc123724$$FastClassBySpringCGLIB$$31030b28</td>
+  </tr>
+  <tr>
+    <td class="name">KafkaConfig$$FastClassBySpringCGLIB$$660970f9</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.sylleryum.order.config;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.sylleryum.common.entity.Order;
+<i class="no-highlight">4</i>&nbsp;import org.apache.kafka.clients.admin.NewTopic;
+<i class="no-highlight">5</i>&nbsp;import org.apache.kafka.clients.producer.ProducerConfig;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.beans.factory.annotation.Value;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.context.annotation.Bean;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.context.annotation.Configuration;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.kafka.config.TopicBuilder;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.kafka.core.*;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;import java.util.Map;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;@Configuration
+<i class="no-highlight">16</i>&nbsp;public class KafkaConfig {
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    private final KafkaProperties kafkaProperties;
+<i class="no-highlight">19</i>&nbsp;    private final String orderTopic;
+<i class="no-highlight">20</i>&nbsp;    private final String stockTopic;
+<i class="no-highlight">21</i>&nbsp;    private final String paymentTopic;
+<i class="no-highlight">22</i>&nbsp;    private final String notificationTopic;
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    public KafkaConfig(KafkaProperties kafkaProperties,
+<i class="no-highlight">26</i>&nbsp;                       @Value(&quot;${topic.name.order}&quot;) String orderTopic,
+<i class="no-highlight">27</i>&nbsp;                       @Value(&quot;${topic.name.stock}&quot;) String stockTopic,
+<i class="no-highlight">28</i>&nbsp;                       @Value(&quot;${topic.name.payment}&quot;) String paymentTopic,
+<b class="fc"><i class="no-highlight">29</i>&nbsp;                       @Value(&quot;${topic.name.notification}&quot;) String notificationTopic) {</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        this.kafkaProperties = kafkaProperties;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.orderTopic = orderTopic;</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        this.stockTopic = stockTopic;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        this.paymentTopic = paymentTopic;</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        this.notificationTopic = notificationTopic;</b>
+<i class="no-highlight">35</i>&nbsp;    }
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    @Bean
+<i class="no-highlight">39</i>&nbsp;    public NewTopic createOrderTopic() {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        return TopicBuilder.name(orderTopic)</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;                .partitions(3)</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                .compact()</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                .build();</b>
+<i class="no-highlight">44</i>&nbsp;    }
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    @Bean
+<i class="no-highlight">47</i>&nbsp;    public NewTopic createStockTopic() {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        return TopicBuilder.name(stockTopic)</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;                .partitions(3)</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                .compact()</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;                .build();</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    @Bean
+<i class="no-highlight">55</i>&nbsp;    public NewTopic createPaymentTopic() {
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        return TopicBuilder.name(paymentTopic)</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;                .partitions(3)</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;                .compact()</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;                .build();</b>
+<i class="no-highlight">60</i>&nbsp;    }
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;    @Bean
+<i class="no-highlight">63</i>&nbsp;    public NewTopic createTestTopic() {
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        return TopicBuilder.name(notificationTopic)</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                .partitions(3)</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;                .compact()</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;                .build();</b>
+<i class="no-highlight">68</i>&nbsp;    }
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;    @Bean
+<i class="no-highlight">71</i>&nbsp;    public Map&lt;String, Object&gt; producerConfigs() {
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        Map&lt;String, Object&gt; props = kafkaProperties.buildProducerProperties();</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        props.put(ProducerConfig.ACKS_CONFIG, &quot;all&quot;);</b>
+<i class="no-highlight">75</i>&nbsp;
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        return props;</b>
+<i class="no-highlight">77</i>&nbsp;    }
+<i class="no-highlight">78</i>&nbsp;
+<i class="no-highlight">79</i>&nbsp;    @Bean
+<i class="no-highlight">80</i>&nbsp;    public ProducerFactory&lt;String, Order&gt; producerFactory(){
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        return new DefaultKafkaProducerFactory&lt;&gt;(producerConfigs());</b>
+<i class="no-highlight">82</i>&nbsp;    }
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;    @Bean
+<i class="no-highlight">85</i>&nbsp;    public KafkaTemplate&lt;String, Order&gt; kafkaTemplate() {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        return new KafkaTemplate&lt;&gt;(producerFactory());</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<i class="no-highlight">88</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-04-20 19:24</div>
+</div>
+</body>
+</html>

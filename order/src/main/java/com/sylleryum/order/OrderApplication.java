@@ -19,6 +19,7 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.support.serializer.JsonSerde;
 
 import java.time.Duration;
+import java.util.UUID;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.sylleryum")
@@ -26,7 +27,9 @@ import java.time.Duration;
 @Slf4j
 public class OrderApplication {
 
-
+    static {
+        System.setProperty("spring.kafka.streams.state-dir", "/tmp/kafka-streams/"+ UUID.randomUUID());
+    }
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
     }

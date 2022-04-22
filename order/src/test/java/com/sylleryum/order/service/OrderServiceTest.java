@@ -44,7 +44,7 @@ class OrderServiceTest {
 
     @Test
     void findByOrderNumber_isFound() {
-        String orderNumberTest = "order1";
+        String orderNumberTest = UUID.randomUUID().toString();
         orderDAO.setOrderNumber(orderNumberTest);
         orderService.save(orderDAO);
 

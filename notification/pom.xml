@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.sylleryum</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
@@ -48,6 +48,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>sylleryum/${project.artifactId}</name>
+                    </image>
+                </configuration>
             </plugin>
         </plugins>
     </build>
