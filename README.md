@@ -43,6 +43,7 @@ Order service also sends the final order status to Kafka, notification service s
 - If running locally, configurations of the microservices can be changed through shared.application located at common\src\resources\ (explanaition of relevant configurations are included in this file).
 - 
 ## Considerations regarding this project and best practices:
+- Kafka may be tricky to handle proficiently duplications/idempotency. In this project the approach of [enabling idempotent producer was used](https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html#producerconfigs_enable.idempotence). Consumer and its commit offset strategy should be considered also. E.g.: [Idempotent Kafka Consumer](https://medium.com/techwasti/idempotent-kafka-consumer-442f9aec991e)
 - This projects uses 2 DBs, Postgres for Order service and MongoDB for Stock service, this is only to showcase microservices and Kafka with different DBs.
 - Common module should be replaced in a real scenario for a better approach as externalized configuration pattern.
 - For simplicity sake, Kafka producer/consumer are using a shared entity located in the common module, in a real scenario Avro/schema registry (included in the docker-compose file) is advised.

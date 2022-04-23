@@ -3,14 +3,27 @@ package com.sylleryum.order.config;
 import com.sylleryum.common.entity.Order;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.StreamsConfig;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.UnsatisfiedDependencyException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
+import org.springframework.kafka.config.KafkaStreamsConfiguration;
+import org.springframework.kafka.config.StreamsBuilderFactoryBean;
+import org.springframework.kafka.config.StreamsBuilderFactoryBeanConfigurer;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 @Configuration
 public class KafkaConfig {
@@ -65,24 +78,5 @@ public class KafkaConfig {
                 .partitions(3)
                 .compact()
                 .build();
-    }
-
-    @Bean
-    public Map<String, Object> producerConfigs() {
-        Map<String, Object> props = kafkaProperties.buildProducerProperties();
-        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
-        props.put(ProducerConfig.ACKS_CONFIG, "all");
-
-        return props;
-    }
-
-    @Bean
-    public ProducerFactory<String, Order> producerFactory(){
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
-    }
-
-    @Bean
-    public KafkaTemplate<String, Order> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
     }
 }

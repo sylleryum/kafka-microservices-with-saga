@@ -24,7 +24,7 @@ public class NotificationService {
 
     private void successNotification(Order order) {
         LOG.info("success for order {}", order.getOrderNumber());
-        System.out.println("*********Notification sent: your order " + order.getOrderNumber() + " has been processed and is ready to be shipped...");
+        System.out.println("***Notification sent: your order " + order.getOrderNumber() + " has been processed and is ready to be shipped...");
     }
 
     private List<String> failureNotification(Order order) {

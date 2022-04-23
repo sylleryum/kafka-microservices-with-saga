@@ -3,6 +3,7 @@ package com.sylleryum.order.service;
 import com.sylleryum.common.entity.Order;
 import com.sylleryum.common.util.OrderStatus;
 import com.sylleryum.order.entity.OrderDAO;
+import com.sylleryum.order.exception.OrderException;
 import com.sylleryum.order.producer.KafkaProducer;
 import com.sylleryum.order.util.OrderConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,11 @@ public class OrderManagementService {
 
     @Transactional
     public Order processOrder(Order stockOrder, Order paymentOrder) {
-        try {
-            OrderDAO orderDAO = orderService.findByOrderNumber(stockOrder.getOrderNumber()).get();
+            OrderDAO orderDAO = orderService.findByOrderNumber(stockOrder.getOrderNumber()).orElseThrow(() -> {
+                log.error("something is wrong, order {} should be available but isn't, " +
+                        "if here, put a breakpoint to check it",stockOrder.getOrderNumber());
+                return new OrderException("order not found");
+            });
             orderDAO.setStockStatus(stockOrder.getStockStatus());
             orderDAO.setStockStatusReason(stockOrder.getStockStatusReason());
             orderDAO.setPaymentStatus(paymentOrder.getPaymentStatus());
@@ -60,17 +64,6 @@ public class OrderManagementService {
             log.debug("rollback order, only payment failed {}", orderDAO);
             orderDAO.setStockStatus(OrderStatus.ROLLBACK);
             return orderConverter.orderDaoToKafka(orderDAO);
-        }catch (Exception e){
-            System.out.println("-------------------------------------");
-            System.out.println("-------------------------------------");
-            System.out.println("-------------------------------------");
-            System.out.println("-------------------------------------");
-            System.out.println("-------------------------------------");
-            System.out.println("-------------------------------------");
-
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

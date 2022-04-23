@@ -27,9 +27,7 @@ import java.util.UUID;
 @Slf4j
 public class OrderApplication {
 
-    static {
-        System.setProperty("spring.kafka.streams.state-dir", "/tmp/kafka-streams/"+ UUID.randomUUID());
-    }
+
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
     }
@@ -50,8 +48,8 @@ public class OrderApplication {
         this.kafkaTopicOrder = kafkaTopicOrder;
         this.joinWindow = joinWindow;
         this.orderManagementService = orderManagementService;
+        System.setProperty("spring.kafka.streams.state-dir", "/tmp/kafka-streams/"+ UUID.randomUUID());
     }
-
 
     @Bean
     public KStream<String, Order> kstreamOrder(StreamsBuilder builder) {
