@@ -105,9 +105,9 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>../target</outputDirectory>
-                        </configuration>
+<!--                        <configuration>-->
+<!--                            <outputDirectory>../target</outputDirectory>-->
+<!--                        </configuration>-->
                     </execution>
                 </executions>
             </plugin>
