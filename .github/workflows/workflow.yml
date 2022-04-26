@@ -21,7 +21,6 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           flags: unittests
-          files: ./jacoco.xml
           name: codecov-umbrella
           path_to_write_report: ./coverage/codecov_report.txt
           verbose: true
