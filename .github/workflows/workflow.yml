@@ -16,7 +16,7 @@ jobs:
         working-directory: ./resources/docker files/test containers/
         run: docker-compose up -d
       - name: Build with Maven
-        run: mvn test jacoco:report
+        run: mvn test jacoco:report -e
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
