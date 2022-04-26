@@ -13,7 +13,8 @@ jobs:
         with:
           java-version: 11.0.x
       - name: Build the stack
-        run: resources\docker files\test containers\docker-compose up -d
+        working-directory: ./resources/docker files/test containers/
+        run: docker-compose up -d
       - name: Build with Maven
         run: mvn test jacoco:report
       - name: Upload coverage to Codecov
