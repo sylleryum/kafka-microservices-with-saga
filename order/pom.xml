@@ -15,6 +15,7 @@
     <description>order</description>
     <properties>
         <java.version>11</java.version>
+            <jacoco.agent.argLine />
     </properties>
     <dependencies>
         <dependency>
