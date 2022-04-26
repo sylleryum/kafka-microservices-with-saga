@@ -84,6 +84,10 @@
                     <excludes>
                         <exclude>com/sylleryum/order/entity/**</exclude>
                         <exclude>com/sylleryum/common/entity/**</exclude>
+                        <exclude>com/sylleryum/order/OrderApplication.java</exclude>
+                        <exclude>com/sylleryum/notifications/NotificationApplication.java</exclude>
+                        <exclude>com/sylleryum/payment/PaymentApplication.java</exclude>
+                        <exclude>com/sylleryum/stock/StockApplication.java</exclude>
                     </excludes>
                 </configuration>
                 <groupId>org.jacoco</groupId>
