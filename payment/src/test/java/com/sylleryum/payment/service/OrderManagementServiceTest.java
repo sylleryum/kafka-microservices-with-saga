@@ -52,4 +52,20 @@ class OrderManagementServiceTest {
         Order result = orderManagementService.processPayment(order);
         assertThat(result.getPaymentStatus()).isEqualTo(OrderStatus.FAILED);
     }
+
+    @Test
+    void processPayment_rollback_true() {
+        Mockito.when(globalConfigs.statusPayment()).thenReturn(1);
+        int itemQuantity=2;
+        List<Item> itemList = new ArrayList<>();
+        for (int i=1;i<=itemQuantity;i++) {
+            itemList.add(new Item(globalConfigs.itemPrefix()+i, 3));
+        }
+        Order order = new Order(
+                "orderNumber", itemList,3L);
+        order.setPaymentStatus(OrderStatus.ROLLBACK);
+        Order processPayment = orderManagementService.processPayment(order);
+
+        assertThat(processPayment.getPaymentStatus()).isEqualTo(OrderStatus.ROLLBACK);
+    }
 }
