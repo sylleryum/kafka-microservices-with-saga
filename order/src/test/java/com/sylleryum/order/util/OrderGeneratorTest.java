@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,6 +34,9 @@ class OrderGeneratorTest {
     @BeforeEach
     void setUp() {
         Mockito.when(globalConfigs.itemPrefix()).thenReturn("itemnumber");
+    }
+    static {
+        System.setProperty("spring.kafka.streams.state-dir", "/tmp/kafka-streams/" + UUID.randomUUID());
     }
 
     @Test
@@ -61,13 +65,13 @@ class OrderGeneratorTest {
 
     @Test
     void generateNewOrderDAOs_itemNumbersAreInSequence_true() {
-//        var order = Optional.of(5L);
-//        var item = Optional.of(3L);
-//        long lastItemNumber = (order.get() * item.get());
-//
-//        List<OrderDAO> orderList = orderGenerator.generateNewOrderDAOs(order, item);
-//
-//        assertThat(orderList.get(4).getItems().get(2).getItemNumber()).isEqualTo(globalConfigs.itemPrefix()+lastItemNumber);
+        var order = Optional.of(5L);
+        var item = Optional.of(3L);
+        long lastItemNumber = (order.get() * item.get());
+
+        List<OrderDAO> orderList = orderGenerator.generateNewOrderDAOs(order, item);
+
+        assertThat(orderList.get(4).getItems().get(2).getItemNumber()).isEqualTo(globalConfigs.itemPrefix()+lastItemNumber);
     }
 
     @Test
