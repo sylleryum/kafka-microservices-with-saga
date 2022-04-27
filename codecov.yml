@@ -1,3 +1,5 @@
 ignore:
+#exclude POJOs
   - "**/entity" 
+ #excludes (PSVM) main method
   - "**Application.java"
