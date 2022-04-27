@@ -45,6 +45,13 @@ public class OrderManagementService {
                 log.debug("order succeeded {}", orderDAO);
                 return orderConverter.orderDaoToKafka(orderDAO);
             }
+
+            if (orderDAO.getStockStatus().equalsIgnoreCase(OrderStatus.FAILED) &&
+                    orderDAO.getPaymentStatus().equalsIgnoreCase(OrderStatus.FAILED)){
+                log.debug("order failed {}", orderDAO);
+                return orderConverter.orderDaoToKafka(orderDAO);
+            }
+
             //if arrived here, at least one service failed
             if (orderDAO.getStockStatus().equalsIgnoreCase(OrderStatus.FAILED)) {
                 //both failed
