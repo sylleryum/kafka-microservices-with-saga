@@ -47,7 +47,7 @@ class OrderManagementServiceTest {
     }
 
     @Test
-    void processOrder_allFailed_allRollback() {
+    void processOrder_allFailed_allFailed() {
         OrderDAO orderDAO = orderGenerator.generateNewOrderDAOs(Optional.of(1L), Optional.of(1L)).get(0);
         orderDAO.setStockStatus(OrderStatus.FAILED);
         orderDAO.setPaymentStatus(OrderStatus.FAILED);
@@ -57,8 +57,8 @@ class OrderManagementServiceTest {
         Mockito.when(orderService.findByOrderNumber(orderDAO.getOrderNumber())).thenReturn(Optional.of(orderDAO));
         Order orderResult = orderManagementService.processOrder(order, order);
 
-        assertThat(orderResult.getStockStatus()).isEqualTo(OrderStatus.ROLLBACK);
-        assertThat(orderResult.getPaymentStatus()).isEqualTo(OrderStatus.ROLLBACK);
+        assertThat(orderResult.getStockStatus()).isEqualTo(OrderStatus.FAILED);
+        assertThat(orderResult.getPaymentStatus()).isEqualTo(OrderStatus.FAILED);
     }
 
     @Test
